@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Hope</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="log_out">log out</string>
+
+    <string-array name="demo_data">
+        <item>Demo data one</item>
+        <item>Demo data two</item>
+        <item>Demo data three</item>
+        <item>Demo data four</item>
+        <item>Demo data five</item>
+    </string-array>
+</resources>

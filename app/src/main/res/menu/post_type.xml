@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/rpost"
+        android:title="Post"
+        android:icon="@drawable/ic_post"
+    />
+    <item
+        android:id="@+id/job_post"
+        android:title="Job Post"
+        android:icon="@drawable/ic_jobs"
+        />
+</menu>
