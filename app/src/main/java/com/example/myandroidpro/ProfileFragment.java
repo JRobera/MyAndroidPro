@@ -16,16 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.URI;
 
 public class ProfileFragment extends Fragment {
 private TextView user_name, user_email;
-private ImageView img_avatar, prof_add_profile;
+private ImageView img_avatar, prof_add_profile,prof_edit_profile;
 
 private static final String SHARED_PREFS = "shared_prefs";
 private static final String IMAGE = "";
-private int saved_profile;
+private String saved_profile;
 Uri selectedprofile;
 
     public ProfileFragment() {
@@ -57,13 +58,19 @@ Uri selectedprofile;
 
             }
         });
-
+        prof_edit_profile = view.findViewById(R.id.prof_edit_profile);
+        prof_edit_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Edit profile", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         user_name.setText(LoginActivity.getUser_name());
         user_email.setText(LoginActivity.getEmail());
         img_avatar.setImageResource(LoginActivity.getUser_image());
-loadDate();
-updateViews();
+        loadDate();
+        updateViews();
     }
 
     @Override
@@ -78,13 +85,15 @@ updateViews();
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(IMAGE, selectedprofile.toString());
+
     }
     public void loadDate(){
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        saved_profile = sharedPreferences.getInt(IMAGE,0);
+        saved_profile = sharedPreferences.getString(IMAGE,"");
     }
     public void updateViews(){
-        img_avatar.setImageResource(saved_profile);
+        img_avatar.setImageURI(Uri.parse(saved_profile));
+
     }
 
 

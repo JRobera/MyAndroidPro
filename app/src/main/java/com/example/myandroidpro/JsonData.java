@@ -34,11 +34,28 @@ public interface JsonData {
             @Field("_id")String _id,
             @Field("likes")int like
     );
+    @FormUrlEncoded
+    @POST("liked")
+    Call<UserModel> updateLiked(
+            @Field("_id")String _id,
+            @Field("user_id")String user_id
+    );
     @DELETE("/delete/{id}")
     Call<Void> deletePost(@Path("id")String post_id);
 
     @GET("/comment")
-    Call<List<CommentModel>> getComments();
+    Call<List<CommentModel>> getComments(@Query("post_id")String post_id);
+
+    @GET("/comment_count")
+    Call<Integer> getComment_count(@Query("post_id")String post_id);
+
+    @FormUrlEncoded
+    @POST("/comment")
+    Call<List<CommentModel>> addComment(
+            @Field("user_id") String user_id,
+            @Field("post_id") String post_id,
+            @Field("content") String content
+    );
 
 
     @GET("/search-post")

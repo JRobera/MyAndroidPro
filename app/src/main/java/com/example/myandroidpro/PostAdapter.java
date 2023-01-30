@@ -3,9 +3,13 @@ package com.example.myandroidpro;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,8 +56,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         PostModel model = postModelArrayList.get(position);
-//        holder.user_image.setImageResource(model.getAuthor());
         holder._id.setText(model.get_id());
+
         Call<List<UserModel>> call = jsonData.getUserById(model.getAuthor());
         call.enqueue(new Callback<List<UserModel>>() {
             @Override
@@ -73,10 +77,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         });
         holder.post_title.setText(model.getTitle());
-//        holder.post_image.setImageResource(model.getTitle());
         holder.post.setText(model.getBody());
+
         holder.likes_count.setText(String.valueOf(model.getLikes()));
-//        holder.comment_count.setText(String.valueOf(model.getBody()));
+
+
+        Call<Integer> call2 = jsonData.getComment_count(holder._id.getText().toString());
+        call2.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if(!response.isSuccessful()){return;}
+                holder.comment_count.setText(response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                Toast.makeText(context.getApplicationContext(), "comment failure", Toast.LENGTH_SHORT).show();
+            }
+        });
         if(model.getAuthor().equals(LoginActivity.getUser_id())){
             holder.delete_image.setVisibility(View.VISIBLE);
         }
@@ -100,6 +118,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         private final ImageView delete_image;
         private final ImageView comment_image;
         private final TextView comment_count;
+        private final EditText ed_comment;
+        private final Button btn_comment;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -110,19 +130,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             post_image = itemView.findViewById(R.id.post_image);
             post = itemView.findViewById(R.id.post);
             likes_count = itemView.findViewById(R.id.txt_likes);
+
             comment_count = itemView.findViewById(R.id.txt_comment);
 
             comment_image = itemView.findViewById(R.id.comment_image);
             comment_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentManager fragmentManager2 = new CommentFragment().getFragmentManager();
-                    FragmentTransaction fragmentTransaction2 = fragmentManager2.beginTransaction();
-                    fragmentTransaction2.replace(R.id.container, new JobPostFragment());
-                    fragmentTransaction2.commit();
-//                    MainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.container, new CommentFragment()).commit();
-
-                    Toast.makeText(comment_image.getContext(), "comment clicked", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(comment_image.getContext(), CommentActivity.class);
+                    intent.putExtra("post_id", _id.getText().toString());
+                    comment_image.getContext().startActivity(intent);
                 }
             });
 
@@ -132,18 +149,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 @Override
                 public void onClick(View view) {
 
-                    Call<PostModel> call = jsonData.updateLike(_id.getText().toString(),Integer.valueOf(likes_count.getText().toString())+1);
-                            call.enqueue(new Callback<PostModel>() {
-                                @Override
-                                public void onResponse(Call<PostModel> call, Response<PostModel> response) {
-                                    if(!response.isSuccessful()){
-                                        return;
-                                    }
-                                }
-                                @Override
-                                public void onFailure(Call<PostModel> call, Throwable t) { }
-                            });
-                }
+                    Call<PostModel> call1 = jsonData.updateLike(_id.getText().toString(),Integer.valueOf(likes_count.getText().toString())+1);
+                    call1.enqueue(new Callback<PostModel>() {
+                        @Override
+                        public void onResponse(Call<PostModel> call, Response<PostModel> response) {
+                            if(!response.isSuccessful()){return;}
+                        }
+                        @Override
+                        public void onFailure(Call<PostModel> call, Throwable t) { }
+                    });
+                    int color = Color.parseColor("#CC2E76BE");
+                    like_image.setColorFilter(color);
+                    likes_count.setText(String.valueOf(Integer.valueOf(likes_count.getText().toString())+1));
+
+                    }
+
             });
 
             delete_image = itemView.findViewById(R.id.delete_img);
@@ -178,6 +198,34 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                             });
                     AlertDialog dialog = builder.create();
                     dialog.show();
+
+                }
+            });
+
+            ed_comment = itemView.findViewById(R.id.ed_comment);
+            btn_comment = itemView.findViewById(R.id.btn_comment);
+            btn_comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (ed_comment.getText() != null){
+                        Call<List<CommentModel>> call = jsonData.addComment(LoginActivity.getUser_id(), _id.getText().toString(), ed_comment.getText().toString());
+                        call.enqueue(new Callback<List<CommentModel>>() {
+                        @Override
+                        public void onResponse(Call<List<CommentModel>> call, Response<List<CommentModel>> response) {
+                            if (!response.isSuccessful()) {
+                                return;
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<CommentModel>> call, Throwable t) {
+
+                        }
+                    });
+                        comment_count.setText(String.valueOf(Integer.valueOf(comment_count.getText().toString())+1));
+                }else{
+                        Toast.makeText(_id.getContext(), "comment empty", Toast.LENGTH_SHORT).show();
+                    }
+                    ed_comment.setText("");
 
                 }
             });

@@ -49,56 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         txterror = findViewById(R.id.error_message);
-//        postRV = findViewById(R.id.idRVPost);
-//        ArrayList<PostModel> postModelArrayList = new ArrayList<PostModel>();
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://10.0.2.2:4000/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        jsonData = retrofit.create(JsonData.class);
-//
-//        Call<List<PostModel>> call = jsonData.getPosts();
-//        call.enqueue(new Callback<List<PostModel>>() {
-//            @Override
-//            public void onResponse(Call<List<PostModel>> call, Response<List<PostModel>> response) {
-//                if(!response.isSuccessful()){
-//                    txterror.setText("code "+ response.code());
-//                    return;
-//                }
-//                List<PostModel> posts = response.body();
-//                for(PostModel post : posts){
-//                    postModelArrayList.add(new PostModel(post.getAuthor(), post.getTitle(), post.getBody(),post.getLikes()));
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<PostModel>> call, Throwable t) {
-//                txterror.setText(t.getMessage());
-//                txterror.setVisibility(View.VISIBLE);
-//            }
-//        });
-//
-//        // Here, we have created new array list and added data to it
-//        postModelArrayList.add(new PostModel("Robera", R.drawable.ic_person, "title", R.drawable.ic_launcher_background, "This is the first post",5,0,3,0));
-//        postModelArrayList.add(new PostModel("Abera", R.drawable.ic_person,"Second title", R.drawable.ic_launcher_background,"This is the second post",72,0,4,0));
-//        postModelArrayList.add(new PostModel("Haji", R.drawable.ic_person,"Thrid title", R.drawable.ic_launcher_background,"This is the theied post",2,0,4,0));
-//        postModelArrayList.add(new PostModel("Helen", R.drawable.ic_person,"Forth title", R.drawable.ic_launcher_background,"This is the forth post",12,0,6,0));
-//        postModelArrayList.add(new PostModel("Abera", R.drawable.ic_person,"Fiveth title", R.drawable.ic_launcher_background,"This is the fiveth post",22,0,11,0));
-//        postModelArrayList.add(new PostModel("Firans", R.drawable.ic_person,"Sixth title", R.drawable.ic_launcher_background,"This is the sixth post",30,0,15,0));
-//        postModelArrayList.add(new PostModel("Abera", R.drawable.ic_person,"Seventh title", R.drawable.ic_launcher_background,"This is the seventh post",15,0,5,0));
-////
-        // we are initializing our adapter class and passing our arraylist to it.
-//        PostAdapter postAdapter = new PostAdapter(this, postModelArrayList);
-
-        // below line is for setting a layout manager for our recycler view.
-        // here we are creating vertical list so we will provide orientation as vertical
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-
-        // in below two lines we are setting layoutmanager and adapter to our recycler view.
-//        postRV.setLayoutManager(linearLayoutManager);
-//        postRV.setAdapter(postAdapter);
-
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(this);
@@ -145,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             @Override
             public boolean onMenuItemActionCollapse(MenuItem menuItem) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+                bottomNavigationView.setSelectedItemId(R.id.home);
                 return true;
             }
         });
