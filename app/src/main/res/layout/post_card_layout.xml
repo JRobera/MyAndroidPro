@@ -182,6 +182,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add"
+                android:textColor="@color/white"
                 android:layout_gravity="bottom"
                 app:layout_constraintBottom_toBottomOf="@+id/ed_comment"
                 app:layout_constraintStart_toEndOf="@+id/ed_comment" />

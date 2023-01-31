@@ -72,7 +72,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
             @Override
             public void onFailure(Call<List<UserModel>> call, Throwable t) {
-                Toast.makeText(context.getApplicationContext(), "failed to get username", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context.getApplicationContext(), "failed to get username", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -92,7 +92,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
             @Override
             public void onFailure(Call<Integer> call, Throwable t) {
-                Toast.makeText(context.getApplicationContext(), "comment failure", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context.getApplicationContext(), "comment failure", Toast.LENGTH_SHORT).show();
             }
         });
         if(model.getAuthor().equals(LoginActivity.getUser_id())){

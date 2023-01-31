@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:text="Post"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="@+id/ed_post"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/ed_post"
