@@ -10,7 +10,7 @@
         android:id="@+id/top_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#EAF4F4"
+        style="@style/Widget.AppTheme.MyView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
         <!-- TODO: Update blank fragment layout -->

@@ -14,41 +14,69 @@
 
         <!-- TODO: Update blank fragment layout -->
 
-        <EditText
-            android:id="@+id/ed_title"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/titleLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="Enter title"
-            android:inputType="text"
-            app:layout_constraintTop_toBottomOf="@+id/postbottomNavigationView"
-            tools:layout_editor_absoluteX="5dp" />
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:counterEnabled="true"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="@+id/postbottomNavigationView"
+            app:layout_constraintStart_toStartOf="@+id/postbottomNavigationView"
+            app:layout_constraintTop_toBottomOf="@+id/postbottomNavigationView">
 
-        <EditText
-            android:id="@+id/ed_post"
+            <EditText
+                android:id="@+id/ed_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter title"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/postLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:gravity="top"
-            android:hint="What do you want to talk about?"
-            android:inputType="textMultiLine"
-            android:scrollbars="vertical"
-            app:layout_constraintEnd_toEndOf="@+id/ed_title"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/ed_title"
-            app:layout_constraintTop_toBottomOf="@+id/ed_title" />
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:counterEnabled="true"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="@+id/titleLayout"
+            app:layout_constraintStart_toStartOf="@+id/titleLayout"
+            app:layout_constraintTop_toBottomOf="@+id/titleLayout">
+
+            <EditText
+                android:id="@+id/ed_post"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:gravity="top"
+                android:hint="What do you want to talk about?"
+                android:inputType="textMultiLine"
+                android:scrollbars="vertical" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/btn_post"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="10dp"
             android:text="Post"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="@+id/ed_post"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/ed_post"
-            app:layout_constraintTop_toBottomOf="@+id/ed_post" />
+            android:textColor="@color/light_blue"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            app:layout_constraintEnd_toEndOf="@+id/postLayout"
+            app:layout_constraintStart_toStartOf="@+id/postLayout"
+            app:layout_constraintTop_toBottomOf="@+id/postLayout" />
 
         <FrameLayout
             android:id="@+id/poFragment"

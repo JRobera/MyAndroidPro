@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.textfield.TextInputLayout;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,36 +84,49 @@ public class JobPostFragment extends Fragment {
         btn_post_job.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isEmpty(job_title.getText()) && !isEmpty(job_description.getText()) && !isEmpty(job_requirements.getText())){
+                if(!isEmpty(job_title.getText())){
+                if(!isEmpty(job_description.getText())){
+                    if(!isEmpty(job_requirements.getText())){
+                        Call<JobModel> call = jsonData.createJobPost(LoginActivity.getUser_id(),job_title.getText().toString(),job_description.getText().toString(),job_requirements.getText().toString(),job_salary.getText().toString(),job_location.getText().toString());
+                        call.enqueue(new Callback<JobModel>() {
+                            @Override
+                            public void onResponse(Call<JobModel> call, Response<JobModel> response) {
+                                if(!response.isSuccessful()){
+                                    return;
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<JobModel> call, Throwable t) {
 
-                Call<JobModel> call = jsonData.createJobPost(LoginActivity.getUser_id(),job_title.getText().toString(),job_description.getText().toString(),job_requirements.getText().toString(),job_salary.getText().toString(),job_location.getText().toString());
-                call.enqueue(new Callback<JobModel>() {
-                    @Override
-                    public void onResponse(Call<JobModel> call, Response<JobModel> response) {
-                        if(!response.isSuccessful()){
-                            return;
-                        }
+                            }
+                        });
+
+                        job_title.setText("");
+                        job_description.setText("");
+                        job_requirements.setText("");
+                        job_salary.setText("");
+                        job_location.setText("");
+                        FragmentManager fragmentManager1 = getFragmentManager();
+                        FragmentTransaction fragmentTransaction1 = fragmentManager1.beginTransaction();
+                        fragmentTransaction1.replace(R.id.container, new JobFragment());
+                        fragmentTransaction1.commit();
+                        MainActivity.getBottomNavigationView().setSelectedItemId(R.id.job);
+                        InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(btn_post_job.getWindowToken(), 0);
+
+
+                    }else{
+                        TextInputLayout requirements = getActivity().findViewById(R.id.requrementsLayout);
+                        requirements.setError("Requirement is required");
                     }
-                    @Override
-                    public void onFailure(Call<JobModel> call, Throwable t) {
+                }else{
+                    TextInputLayout description = getActivity().findViewById(R.id.descriptionLayout);
+                    description.setError("Description is required");}
 
-                    }
-                });
-            }
-                job_title.setText("");
-                job_description.setText("");
-                job_requirements.setText("");
-                job_salary.setText("");
-                job_location.setText("");
-                FragmentManager fragmentManager1 = getFragmentManager();
-                FragmentTransaction fragmentTransaction1 = fragmentManager1.beginTransaction();
-                fragmentTransaction1.replace(R.id.container, new JobFragment());
-                fragmentTransaction1.commit();
-               MainActivity.getBottomNavigationView().setSelectedItemId(R.id.job);
-                InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(btn_post_job.getWindowToken(), 0);
-
-
+            }else{
+                    TextInputLayout title = getActivity().findViewById(R.id.titleLayout);
+                    title.setError("Title is required");
+                }
 
             }
         });

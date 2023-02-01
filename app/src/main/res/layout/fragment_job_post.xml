@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="60dp">
+    android:paddingBottom="70dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,65 +21,129 @@
             app:menu="@menu/post_type"
             tools:layout_editor_absoluteX="0dp" />
 
-        <EditText
-            android:id="@+id/job_title"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/titleLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="Add Job Title"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:counterEnabled="true"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="@+id/postbottomNavigationView"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/postbottomNavigationView"
-            app:layout_constraintTop_toBottomOf="@+id/postbottomNavigationView" />
+            app:layout_constraintTop_toBottomOf="@+id/postbottomNavigationView">
 
-        <EditText
-            android:id="@+id/job_description"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="12dp"
-            android:gravity="top"
-            android:hint="Add Job Description"
-            android:inputType="textMultiLine"
-            android:scrollbars="vertical"
-            app:layout_constraintEnd_toEndOf="@+id/job_title"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/job_title"
-            app:layout_constraintTop_toBottomOf="@+id/job_title" />
+            <EditText
+                android:id="@+id/job_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Add Job Title" />
 
-        <EditText
-            android:id="@+id/job_requirements"
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/descriptionLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="Add Job Requirements"
-            android:inputType="textMultiLine"
-            app:layout_constraintEnd_toEndOf="@+id/job_description"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/job_description"
-            app:layout_constraintTop_toBottomOf="@+id/job_description" />
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:counterEnabled="true"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="@+id/titleLayout"
+            app:layout_constraintStart_toStartOf="@+id/titleLayout"
+            app:layout_constraintTop_toBottomOf="@+id/titleLayout">
 
-        <EditText
-            android:id="@+id/job_salary"
+            <EditText
+                android:id="@+id/job_description"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:gravity="top"
+                android:hint="Add Job Description"
+                android:inputType="textMultiLine"
+                android:scrollbars="vertical" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/requrementsLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="Add Job Salary"
-            android:inputType="number"
-            app:layout_constraintEnd_toEndOf="@+id/job_requirements"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/job_requirements"
-            app:layout_constraintTop_toBottomOf="@+id/job_requirements" />
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:counterEnabled="true"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/descriptionLayout"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionLayout">
 
-        <EditText
-            android:id="@+id/job_location"
+            <EditText
+                android:id="@+id/job_requirements"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Add Job Requirements"
+                android:inputType="textMultiLine" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/salaryLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="Add Job Location"
-            app:layout_constraintEnd_toEndOf="@+id/job_salary"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/job_salary"
-            app:layout_constraintTop_toBottomOf="@+id/job_salary" />
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:counterEnabled="true"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="@+id/requrementsLayout"
+            app:layout_constraintStart_toStartOf="@+id/requrementsLayout"
+            app:layout_constraintTop_toBottomOf="@+id/requrementsLayout">
+
+            <EditText
+                android:id="@+id/job_salary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Add Job Salary"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/locationLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:counterEnabled="true"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="@+id/salaryLayout"
+            app:layout_constraintStart_toStartOf="@+id/salaryLayout"
+            app:layout_constraintTop_toBottomOf="@+id/salaryLayout">
+
+            <EditText
+                android:id="@+id/job_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Add Job Location" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/btn_post_job"
@@ -87,10 +151,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="Post Job"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="@+id/job_location"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/job_location"
-            app:layout_constraintTop_toBottomOf="@+id/job_location" />
+            android:textColor="@color/light_blue"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            app:layout_constraintEnd_toEndOf="@+id/locationLayout"
+            app:layout_constraintStart_toStartOf="@+id/locationLayout"
+            app:layout_constraintTop_toBottomOf="@+id/locationLayout" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

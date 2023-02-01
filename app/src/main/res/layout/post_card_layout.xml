@@ -161,29 +161,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/userCommentLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:boxCornerRadiusBottomEnd="25dp"
+                app:boxCornerRadiusTopEnd="25dp"
+                app:boxCornerRadiusBottomStart="25dp"
+                app:boxCornerRadiusTopStart="25dp"
+                android:layout_weight="9"
+                >
+
             <EditText
                 android:id="@+id/ed_comment"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:layout_weight="9"
                 android:hint="Add some comment"
                 android:paddingLeft="5dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btn_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add"
-                android:textColor="@color/white"
-                android:layout_gravity="bottom"
+                android:textColor="@color/light_blue"
+                android:layout_gravity="center"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                 app:layout_constraintBottom_toBottomOf="@+id/ed_comment"
                 app:layout_constraintStart_toEndOf="@+id/ed_comment" />
         </LinearLayout>

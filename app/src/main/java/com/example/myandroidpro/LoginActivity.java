@@ -1,5 +1,7 @@
 package com.example.myandroidpro;
 
+import static android.text.TextUtils.isEmpty;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,8 +12,11 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 
@@ -26,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private static EditText login_email, login_password;
     private Button login;
     private TextView create_account;
+    private ProgressBar login_progress;
     private static String user_id;
     private static String user_name;
     private static Integer user_image;
@@ -66,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         login_password = findViewById(R.id.login_password);
         login = findViewById(R.id.login_btn);
         create_account = findViewById(R.id.new_account);
+        login_progress = findViewById(R.id.login_progress);
 
 //TODO retrofit instance to connect to the API
         Retrofit retrofit = new Retrofit.Builder()
@@ -77,12 +84,14 @@ public class LoginActivity extends AppCompatActivity {
     login.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if(login_email.getText().toString() != null && login_password.getText().toString() != null){
+            if(!isEmpty(login_email.getText().toString()) && !isEmpty(login_password.getText().toString())){
                 if(!Patterns.EMAIL_ADDRESS.matcher(login_email.getText().toString()).matches()){
                     Toast.makeText(LoginActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
                 }else {
                     checkUser();
                 }
+            }else{
+                Toast.makeText(LoginActivity.this, "Email required", Toast.LENGTH_SHORT).show();
             }
         }
     });
@@ -98,13 +107,16 @@ public class LoginActivity extends AppCompatActivity {
 
     loadData();
     updateViews();
-    if(login_email.getText().toString() != null && login_password.getText().toString() != null){
+    if(!isEmpty(login_email.getText().toString())  && !isEmpty(login_password.getText().toString())){
             checkUser();
         }
 
 
     }
     public void checkUser(){
+
+        login_progress.setVisibility(View.VISIBLE);
+
         Call<List<UserModel>> call = jsonData.getUsers(login_email.getText().toString());
         call.enqueue(new Callback<List<UserModel>>() {
             @Override
@@ -127,17 +139,27 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
+                                login_progress.setVisibility(View.INVISIBLE);
                             }else{
+                                TextInputLayout password = findViewById(R.id.userPasswordLayout);
+                                password.setError("Incorrect password!");
                                 Toast.makeText(LoginActivity.this, "Incorrect password!", Toast.LENGTH_SHORT).show();
+                                login_progress.setVisibility(View.INVISIBLE);
+
                             }
                         }else {
+                            TextInputLayout email = findViewById(R.id.userEmailLayout);
+                            email.setError("User does not exist");
                             Toast.makeText(LoginActivity.this, "User does not exist "+login_email.getText().toString(), Toast.LENGTH_SHORT).show();
+                            login_progress.setVisibility(View.INVISIBLE);
+
                         }
                 }
             }
 
             @Override
             public void onFailure(Call<List<UserModel>> call, Throwable t) {
+                login_progress.setVisibility(View.INVISIBLE);
 //                login_email.setText(t.toString());
 //                Toast.makeText(LoginActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
             }
@@ -152,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString(PASSWORD, login_password.getText().toString());
         editor.putString(ID, user_id );
         editor.putString(USER_NAME, user_name);
-        editor.putInt("we",user_image);
+//        editor.putInt("we",user_image);
         editor.putString(UEMAIL, email);
         editor.apply();
         Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();

@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
     RecyclerView postRV;
-    private FragmentHomeBinding binding;
+//    private FragmentHomeBinding binding;
     private JsonData jsonData;
     TextView txt_error;
 
@@ -81,8 +81,6 @@ public class HomeFragment extends Fragment {
             public void onFailure(Call<List<PostModel>> call, Throwable t) {
                 txt_error.setVisibility(View.VISIBLE);
                 txt_error.setText(t.getMessage());
-                Log.d("TAG","Response "+t.toString());
-                Toast.makeText(getContext(), "Post failure", Toast.LENGTH_SHORT).show();
             }
         });
 

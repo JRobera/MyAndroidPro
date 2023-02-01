@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.textfield.TextInputLayout;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -84,32 +85,40 @@ private Button btn_post;
         btn_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isEmpty(ed_title.getText().toString()) && !isEmpty(ed_post.getText().toString())) {
+                if (!isEmpty(ed_title.getText().toString())) {
+                if(!isEmpty(ed_post.getText().toString())){
 
-                Call<PostModel> call = jsonData.createPost(ed_title.getText().toString(), ed_post.getText().toString(), LoginActivity.getUser_id());
-                call.enqueue(new Callback<PostModel>() {
-                    @Override
-                    public void onResponse(Call<PostModel> call, Response<PostModel> response) {
-                        if (!response.isSuccessful()) {
-                            return;
+                    Call<PostModel> call = jsonData.createPost(ed_title.getText().toString(), ed_post.getText().toString(), LoginActivity.getUser_id());
+                    call.enqueue(new Callback<PostModel>() {
+                        @Override
+                        public void onResponse(Call<PostModel> call, Response<PostModel> response) {
+                            if (!response.isSuccessful()) {
+                                return;
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<PostModel> call, Throwable t) {
-                    }
-                });
-                ed_title.setText("");
-                ed_post.setText("");
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, new HomeFragment());
-                fragmentTransaction.commit();
+                        @Override
+                        public void onFailure(Call<PostModel> call, Throwable t) {
+                        }
+                    });
+                    ed_title.setText("");
+                    ed_post.setText("");
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.container, new HomeFragment());
+                    fragmentTransaction.commit();
                     MainActivity.getBottomNavigationView().setSelectedItemId(R.id.home);
                     InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(btn_post.getWindowToken(), 0);
 
+                }else{
+                    TextInputLayout title = getActivity().findViewById(R.id.postLayout);
+                    title.setError("Post body is required");
                 }
+
+                }else{
+                    TextInputLayout title = getActivity().findViewById(R.id.titleLayout);
+                    title.setError("Title is required");}
         }
         });
 

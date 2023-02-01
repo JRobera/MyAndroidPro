@@ -7,6 +7,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="5dp"
     tools:context=".RegistrationActivity">
 
     <TextView
@@ -20,55 +21,94 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/signup_username"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:drawableLeft="@drawable/ic__person_24"
-        android:hint="Username"
-        android:inputType="text"
+        android:layout_marginTop="40dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@+id/header"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/header"
-        app:layout_constraintTop_toBottomOf="@+id/header" />
+        app:layout_constraintTop_toBottomOf="@+id/header">
 
-    <EditText
-        android:id="@+id/signup_email"
+        <EditText
+            android:id="@+id/signup_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic__person_24"
+            android:hint="Username"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="@+id/header"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/header"
+            app:layout_constraintTop_toBottomOf="@+id/header" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/useremailLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
-        android:drawableLeft="@drawable/ic_email"
-        android:hint="Email Address"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="@+id/signup_username"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/signup_username"
-        app:layout_constraintTop_toBottomOf="@+id/signup_username" />
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="@+id/usernameLayout"
+        app:layout_constraintStart_toStartOf="@+id/usernameLayout"
+        app:layout_constraintTop_toBottomOf="@+id/usernameLayout">
 
-    <EditText
-        android:id="@+id/signup_password"
+        <EditText
+            android:id="@+id/signup_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="33dp"
+            android:drawableStart="@drawable/ic_email"
+            android:hint="Email Address"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/userpasswordLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
-        android:drawableLeft="@drawable/ic_password"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/signup_email"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/signup_email"
-        app:layout_constraintTop_toBottomOf="@+id/signup_email" />
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="@+id/useremailLayout"
+        app:layout_constraintStart_toStartOf="@+id/useremailLayout"
+        app:layout_constraintTop_toBottomOf="@+id/useremailLayout">
+
+        <EditText
+            android:id="@+id/signup_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:drawableStart="@drawable/ic_password"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/signup_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
         android:text="Sign Up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.611"
-        app:layout_constraintStart_toStartOf="@+id/signup_password"
-        app:layout_constraintTop_toBottomOf="@+id/signup_password" />
+        android:textColor="@color/light_blue"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+        app:layout_constraintEnd_toEndOf="@+id/userpasswordLayout"
+        app:layout_constraintStart_toStartOf="@+id/userpasswordLayout"
+        app:layout_constraintTop_toBottomOf="@+id/userpasswordLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

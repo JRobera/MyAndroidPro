@@ -1,5 +1,7 @@
 package com.example.myandroidpro;
 
+import static android.text.TextUtils.isEmpty;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -207,7 +209,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             btn_comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (ed_comment.getText() != null){
+                    if (!isEmpty(ed_comment.getText())){
                         Call<List<CommentModel>> call = jsonData.addComment(LoginActivity.getUser_id(), _id.getText().toString(), ed_comment.getText().toString());
                         call.enqueue(new Callback<List<CommentModel>>() {
                         @Override
