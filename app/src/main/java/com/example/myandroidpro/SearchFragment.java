@@ -51,6 +51,7 @@ private String searchquery;
                 .build();
 
         jsonData = retrofit.create(JsonData.class);
+
         PostAdapter searchAdapter = new PostAdapter(this.getContext(), modelArrayList);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);

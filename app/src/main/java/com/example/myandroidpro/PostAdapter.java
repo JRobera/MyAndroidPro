@@ -21,6 +21,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,19 +153,116 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             like_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Call<List<UserModel>> call  = jsonData.getUsers(LoginActivity.getEmail());
+                    call.enqueue(new Callback<List<UserModel>>() {
+                        @Override
+                        public void onResponse(Call<List<UserModel>> call, Response<List<UserModel>> response) {
+                            if(!response.isSuccessful()){
+                                return;
+                            }
+                            List<UserModel> users = response.body();
 
-                    Call<PostModel> call1 = jsonData.updateLike(_id.getText().toString(),Integer.valueOf(likes_count.getText().toString())+1);
-                    call1.enqueue(new Callback<PostModel>() {
-                        @Override
-                        public void onResponse(Call<PostModel> call, Response<PostModel> response) {
-                            if(!response.isSuccessful()){return;}
+                            for(UserModel user : users){
+
+                                if(user.getLikes().size() == 0) {
+
+                                    Call<UserModel> callu = jsonData.userLikes(_id.getText().toString(),LoginActivity.getEmail());
+                                    callu.enqueue(new Callback<UserModel>() {
+                                        @Override
+                                        public void onResponse(Call<UserModel> call, Response<UserModel> response) {}
+
+                                        @Override
+                                        public void onFailure(Call<UserModel> call, Throwable t) {
+                                            Toast.makeText(_id.getContext(), "network failure", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                    Call<PostModel> call1 = jsonData.updateLike(_id.getText().toString(),Integer.valueOf(likes_count.getText().toString())+1);
+                                    call1.enqueue(new Callback<PostModel>() {
+                                        @Override
+                                        public void onResponse(Call<PostModel> call, Response<PostModel> response) {
+                                            if(!response.isSuccessful()){return;}
+                                        }
+                                        @Override
+                                        public void onFailure(Call<PostModel> call, Throwable t) { }
+                                    });
+                                    int color = Color.parseColor("#CC2E76BE");
+                                    like_image.setColorFilter(color);
+                                    likes_count.setText(String.valueOf(Integer.valueOf(likes_count.getText().toString())+1));
+
+                                }else {
+                                    int count=1;
+                                    for (UserModel.LikedPostId likedPostId : user.getLikes()) {
+
+                                        if(likedPostId.getPostid().equals(_id.getText().toString())){
+
+                                            Call<PostModel> call1 = jsonData.updateLike(_id.getText().toString(),Integer.valueOf(likes_count.getText().toString())-1);
+                                            call1.enqueue(new Callback<PostModel>() {
+                                                @Override
+                                                public void onResponse(Call<PostModel> call, Response<PostModel> response) {
+                                                    if(!response.isSuccessful()){return;}
+                                                }
+                                                @Override
+                                                public void onFailure(Call<PostModel> call, Throwable t) { }
+                                            });
+                                            int color = Color.parseColor("#FFFFFF");
+                                            like_image.setColorFilter(color);
+                                            likes_count.setText(String.valueOf(Integer.valueOf(likes_count.getText().toString())-1));
+
+                                           Call<UserModel> callmodifay = jsonData.updateLiked(LoginActivity.getUser_id(),_id.getText().toString());
+                                           callmodifay.enqueue(new Callback<UserModel>() {
+                                               @Override
+                                               public void onResponse(Call<UserModel> call, Response<UserModel> response) { }
+
+                                               @Override
+                                               public void onFailure(Call<UserModel> call, Throwable t) { }
+                                           });
+                                            break;
+
+                                        }else{
+
+                                            if(user.getLikes().size() == count) {
+                                                Call<UserModel> callu = jsonData.userLikes(_id.getText().toString(),LoginActivity.getEmail());
+                                                callu.enqueue(new Callback<UserModel>() {
+                                                    @Override
+                                                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {}
+
+                                                    @Override
+                                                    public void onFailure(Call<UserModel> call, Throwable t) {}
+
+                                                });
+
+                                                Call<PostModel> call1 = jsonData.updateLike(_id.getText().toString(),Integer.valueOf(likes_count.getText().toString())+1);
+                                                call1.enqueue(new Callback<PostModel>() {
+                                                    @Override
+                                                    public void onResponse(Call<PostModel> call, Response<PostModel> response) {
+                                                        if(!response.isSuccessful()){return;}
+                                                    }
+                                                    @Override
+                                                    public void onFailure(Call<PostModel> call, Throwable t) { }
+                                                });
+                                                int color = Color.parseColor("#CC2E76BE");
+                                                like_image.setColorFilter(color);
+                                                likes_count.setText(String.valueOf(Integer.valueOf(likes_count.getText().toString())+1));
+
+                                            }
+
+                                        }
+
+                                        count++;
+                                    }
+                                }
+
+                            }
                         }
+
                         @Override
-                        public void onFailure(Call<PostModel> call, Throwable t) { }
+                        public void onFailure(Call<List<UserModel>> call, Throwable t) {
+                            Toast.makeText(_id.getContext(), "network failure", Toast.LENGTH_SHORT).show();
+                        }
                     });
-                    int color = Color.parseColor("#CC2E76BE");
-                    like_image.setColorFilter(color);
-                    likes_count.setText(String.valueOf(Integer.valueOf(likes_count.getText().toString())+1));
+
+
 
                     }
 

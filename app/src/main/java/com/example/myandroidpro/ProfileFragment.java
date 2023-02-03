@@ -1,5 +1,7 @@
 package com.example.myandroidpro;
 
+import static android.text.TextUtils.isEmpty;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,29 +102,32 @@ Uri selectedprofile;
                 updatebtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if (!isEmpty(useremail.getText().toString()) || !Patterns.EMAIL_ADDRESS.matcher(useremail.getText().toString()).matches()) {
+
                         Call<List<UserModel>> call = jsonData.getUsers(LoginActivity.getEmail());
                         call.enqueue(new Callback<List<UserModel>>() {
                             @Override
                             public void onResponse(Call<List<UserModel>> call, Response<List<UserModel>> response) {
 
                                 List<UserModel> users = response.body();
-                                for(UserModel user : users){
-                                    if(oldpassword.getText().toString().equals(user.getPassword())){
+                                for (UserModel user : users) {
+                                    if (oldpassword.getText().toString().equals(user.getPassword())) {
 
-                                        Call<UserModel> call2 = jsonData.updateUser(LoginActivity.getUser_id(), username.getText().toString(),useremail.getText().toString(),newpassword.getText().toString());
+                                        Call<UserModel> call2 = jsonData.updateUser(LoginActivity.getUser_id(), username.getText().toString(), useremail.getText().toString(), newpassword.getText().toString());
                                         call2.enqueue(new Callback<UserModel>() {
                                             @Override
                                             public void onResponse(Call<UserModel> call, Response<UserModel> response) {
 
                                             }
+
                                             @Override
                                             public void onFailure(Call<UserModel> call, Throwable t) {
                                                 Toast.makeText(getActivity(), "Update Failed", Toast.LENGTH_SHORT).show();
                                             }
                                         });
                                         dialog.dismiss();
-                                    }else {
-                                        TextInputLayout Oldpass= dialog.findViewById(R.id.OldPassword);
+                                    } else {
+                                        TextInputLayout Oldpass = dialog.findViewById(R.id.OldPassword);
                                         Oldpass.setError("Incorrect password");
                                     }
                                 }
@@ -132,6 +138,9 @@ Uri selectedprofile;
 
                             }
                         });
+
+                    }else{useremail.setError("Invalid Email");}
+
                     }
 
                 });
@@ -143,7 +152,6 @@ Uri selectedprofile;
 
         user_name.setText(LoginActivity.getUser_name());
         user_email.setText(LoginActivity.getEmail());
-//        img_avatar.setImageResource(LoginActivity.getUser_image());
         loadDate();
         updateViews();
     }

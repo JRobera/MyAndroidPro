@@ -36,10 +36,10 @@ public interface JsonData {
             @Field("likes")int like
     );
     @FormUrlEncoded
-    @POST("liked")
+    @POST("update-liked")
     Call<UserModel> updateLiked(
-            @Field("_id")String _id,
-            @Field("user_id")String user_id
+            @Field("user_id")String user_id,
+            @Field("id")String post_id
     );
     @DELETE("/delete/{id}")
     Call<Void> deletePost(@Path("id")String post_id);
@@ -97,6 +97,11 @@ public interface JsonData {
                                @Field("user_email")String user_email,
                                @Field("newpassword")String newpassword
     );
+
+    @FormUrlEncoded
+    @POST("/liked")
+    Call<UserModel> userLikes(@Field("id")String id,
+                              @Field("user_email")String user_email);
 
 
 }

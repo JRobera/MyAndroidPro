@@ -84,14 +84,21 @@ public class LoginActivity extends AppCompatActivity {
     login.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if(!isEmpty(login_email.getText().toString()) && !isEmpty(login_password.getText().toString())){
-                if(!Patterns.EMAIL_ADDRESS.matcher(login_email.getText().toString()).matches()){
-                    Toast.makeText(LoginActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
-                }else {
-                    checkUser();
-                }
+            if(!isEmpty(login_email.getText().toString())){
+                if(!isEmpty(login_password.getText().toString())){
+                    if(!Patterns.EMAIL_ADDRESS.matcher(login_email.getText().toString()).matches()){
+                        TextInputLayout useremail = findViewById(R.id.userEmailLayout);
+                        useremail.setError("Invalid Email");
+                        Toast.makeText(LoginActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
+                    }else {
+                        checkUser();
+                    }
+                }else{
+                    TextInputLayout password = findViewById(R.id.userPasswordLayout);
+                    password.setError("Password required!");}
             }else{
-                Toast.makeText(LoginActivity.this, "Email required", Toast.LENGTH_SHORT).show();
+                TextInputLayout email = findViewById(R.id.userEmailLayout);
+                email.setError("Email required!");
             }
         }
     });
@@ -152,7 +159,6 @@ public class LoginActivity extends AppCompatActivity {
                             email.setError("User does not exist");
                             Toast.makeText(LoginActivity.this, "User does not exist "+login_email.getText().toString(), Toast.LENGTH_SHORT).show();
                             login_progress.setVisibility(View.INVISIBLE);
-
                         }
                 }
             }
@@ -161,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<List<UserModel>> call, Throwable t) {
                 login_progress.setVisibility(View.INVISIBLE);
 //                login_email.setText(t.toString());
-//                Toast.makeText(LoginActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Network error", Toast.LENGTH_SHORT).show();
             }
         });
 

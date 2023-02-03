@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_email"
                 android:hint="Email"
-                android:inputType="text" />
+                android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,7 +57,7 @@
             android:layout_marginTop="20dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            app:endIconMode="clear_text"
+            app:endIconMode="password_toggle"
             app:errorEnabled="true"
             app:helperTextTextColor="@color/white"
             app:layout_constraintEnd_toEndOf="@+id/userEmailLayout"

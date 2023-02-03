@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="330dp"
-    android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="330dp"
+    android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/editProfile"
         android:layout_width="match_parent"
@@ -60,7 +64,9 @@
             android:id="@+id/user_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="User email" />
+            android:hint="User email"
+            android:inputType="textEmailAddress"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,7 +79,7 @@
         android:layout_marginEnd="5dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        app:endIconMode="clear_text"
+        app:endIconMode="password_toggle"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@+id/UserEmail"
         app:layout_constraintStart_toStartOf="@+id/UserEmail"
@@ -83,7 +89,9 @@
             android:id="@+id/old_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Old password" />
+            android:hint="Old password"
+            android:inputType="textPassword"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,7 +104,7 @@
         android:layout_marginEnd="5dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        app:endIconMode="clear_text"
+        app:endIconMode="password_toggle"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@+id/OldPassword"
         app:layout_constraintStart_toStartOf="@+id/OldPassword"
@@ -106,7 +114,9 @@
             android:id="@+id/new_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="New password" />
+            android:hint="New password"
+            android:inputType="textPassword"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,3 +135,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

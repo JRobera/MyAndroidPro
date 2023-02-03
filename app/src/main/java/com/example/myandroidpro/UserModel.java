@@ -1,16 +1,23 @@
 package com.example.myandroidpro;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 public class UserModel {
     private String _id;
     private String user_name;
     private Integer user_image;
     private String email;
     private String password;
+    @SerializedName("likes")
+    List<LikedPostId> likes;
 
-    public UserModel(String user_name, String user_email, String password) {
+    public UserModel(String user_name, String user_email, String password, List<LikedPostId> likes) {
         this.user_name = user_name;
         this.email = user_email;
         this.password = password;
+        this.likes = likes;
     }
 
     public String get_id() { return _id; }
@@ -43,5 +50,17 @@ public class UserModel {
         this.password = password;
     }
 
+    public List<LikedPostId> getLikes() {
+        return likes;
+    }
 
+    public static class LikedPostId {
+        String postid;
+
+        public LikedPostId(String id) { this.postid = id; }
+
+        public String getPostid() {return postid;}
+
+
+    }
 }
